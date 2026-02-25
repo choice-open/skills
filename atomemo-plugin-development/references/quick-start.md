@@ -4,7 +4,7 @@
 
 - Node.js v20+
 - Git v2+
-- A registered Atomemo account (at atomemo.choiceform.io)
+- A registered Atomemo account (at https://atomemo.ai)
 - Familiarity with TypeScript/JavaScript
 
 ## Installation
@@ -50,10 +50,11 @@ non-interactive mode even without `--no-interactive`.
 cd <plugin-name>
 atomemo plugin refresh-key   # generates .env with debug API key (expires 24h)
 bun install
-bun run dev
+bun run build
+bun run ./dist               # connects to Plugin Hub
 ```
 
-All three commands are non-interactive and can be run automatically.
+All of these commands are non-interactive and can be run automatically.
 
 ## Naming Rules
 
@@ -87,13 +88,15 @@ Invalid: `My-Plugin` (uppercase), `my--plugin` (consecutive hyphens), `plugin-` 
 ## Running Locally
 
 ```bash
-bun run dev       # watch mode with auto-rebuild + Hub connection
+bun run build     # build the plugin
+bun run ./dist    # connect to Plugin Hub
 ```
 
-Or build first then connect:
+`bun run dev` is watch/rebuild mode only — it does **not** connect to the Hub.
+
+To iterate quickly:
 ```bash
-bun run build
-bun run ./dist
+bun run build && bun run ./dist
 ```
 
 A successful connection to the Plugin Hub shows:

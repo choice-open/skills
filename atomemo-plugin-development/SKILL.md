@@ -1,17 +1,18 @@
 ---
 name: atomemo-plugin-development
 description: >
-  Use this skill for all Atomemo plugin development work — creating plugin projects,
-  building Tool plugins (functions that wrap external APIs or local logic), defining
-  Model plugins (LLM integrations), setting up credential systems, configuring
-  parameters, debugging plugin hub connection issues, or publishing to the official
-  marketplace. Also invoke this when a developer wants to expose their code or a
-  third-party service to Atomemo users, even if they don't use the word "plugin".
-  Do NOT invoke for other plugin ecosystems (VS Code extensions, Chrome extensions,
-  Obsidian plugins, Figma plugins, Raycast extensions), generic npm package publishing
-  unrelated to Atomemo, or general Atomemo platform usage questions (workflow
-  scheduling, trigger setup, node configuration, workflow design) that are not
-  specifically about building or publishing plugins.
+  Use this skill for all Atomemo plugin development work — always consult it before
+  answering, since it contains authoritative CLI commands, SDK patterns, and workflows
+  that may differ from your general knowledge. Invoke whenever the user asks about:
+  creating Atomemo plugin projects (atomemo plugin init, bun commands, project
+  structure), implementing Tool plugins (ToolDefinition, external API wrappers),
+  defining Model plugins (ModelDefinition, LLM integrations), setting up credentials
+  (CredentialDefinition, API keys), configuring declarative parameters, debugging
+  plugin hub connections, or publishing to the marketplace. Also invoke when developers
+  want to expose their code or services to Atomemo users, even if they don't say
+  "plugin". Do NOT invoke for: VS Code, Chrome, Obsidian, Figma, or Raycast plugins;
+  npm package publishing; or general Atomemo workflow configuration (scheduling,
+  triggers, node setup) that isn't about building plugins.
 ---
 
 # Atomemo Plugin Development
@@ -82,7 +83,8 @@ atomemo plugin init        # interactive: name, description, language
 cd <plugin-name>
 atomemo plugin refresh-key
 bun install
-bun run dev
+bun run build
+bun run ./dist             # connects to Plugin Hub
 ```
 
 ### Step 3: Implement plugin components
@@ -137,10 +139,11 @@ the `t()` helper is not available (e.g., in one-off scripts or test fixtures).
 ### Step 5: Test locally
 
 ```bash
-bun run dev          # starts dev mode with Hub connection
-# or after build:
-bun run ./dist       # connects to Hub
+bun run build        # build the plugin
+bun run ./dist       # connect to Plugin Hub
 ```
+
+`bun run dev` is watch mode for rebuilding on file changes, but it does **not** connect to the Hub. You must run `bun run ./dist` (the built output) to establish the Hub connection.
 
 Successful connection shows: `status: ok, response: { success: true }`
 
@@ -184,7 +187,8 @@ atomemo plugin init --no-interactive -n <plugin-name> -d "<description>" -l type
 # These are always non-interactive:
 atomemo plugin refresh-key
 bun install
-bun run dev
+bun run build
+bun run ./dist    # connects to Plugin Hub; bun run dev only rebuilds, does not connect
 ```
 
 **What requires user action:**
