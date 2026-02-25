@@ -73,7 +73,41 @@ Ask (or infer from context):
 3. Does it need credentials (API keys, tokens)?
 4. Target language? (TypeScript strongly recommended)
 
-### Step 2: Set up the project (new projects only)
+### Step 2: Verify the Atomemo CLI
+
+Before running any `atomemo` command, check that the CLI is installed and up to date.
+
+**Check if installed:**
+
+```bash
+atomemo --version
+```
+
+If the command is not found, install it first:
+
+```bash
+npm install @choiceopen/atomemo-plugin-cli --global
+```
+
+**Check if up to date:**
+
+```bash
+# Get the currently installed version
+atomemo --version
+
+# Get the latest published version
+npm view @choiceopen/atomemo-plugin-cli version
+```
+
+If the versions differ, upgrade before proceeding:
+
+```bash
+npm install @choiceopen/atomemo-plugin-cli@latest --global
+```
+
+Both of these checks are safe to run automatically. Confirm the upgrade with the user before running it — it modifies their global environment.
+
+### Step 3: Set up the project (new projects only)
 
 See `references/quick-start.md`. Key commands:
 
@@ -87,7 +121,7 @@ bun run build
 bun run ./dist             # connects to Plugin Hub
 ```
 
-### Step 3: Implement plugin components
+### Step 4: Implement plugin components
 
 For each component:
 
@@ -121,7 +155,7 @@ plugin.addCredential(myCredential)
 plugin.run()
 ```
 
-### Step 4: Internationalization
+### Step 5: Internationalization
 
 All user-facing strings support i18n. **Always use the `t()` helper** — it keeps
 translations centralized and consistent across the project:
@@ -136,7 +170,7 @@ description: t("WEATHER_TOOL_DESCRIPTION"),
 Only fall back to inline `I18nText` objects `{ en_US: "...", zh_Hans: "..." }` when
 the `t()` helper is not available (e.g., in one-off scripts or test fixtures).
 
-### Step 5: Test locally
+### Step 6: Test locally
 
 ```bash
 bun run build        # build the plugin
@@ -147,7 +181,7 @@ bun run ./dist       # connect to Plugin Hub
 
 Successful connection shows: `status: ok, response: { success: true }`
 
-### Step 6: Publish (when ready)
+### Step 7: Publish (when ready)
 
 See `references/publishing.md`. Key steps:
 
@@ -181,6 +215,14 @@ When helping a developer set up a new project, you can execute CLI commands on t
 **What you can run automatically:**
 
 ```bash
+# CLI environment check — always run these before any atomemo command:
+atomemo --version                                  # check if installed; install if missing
+npm view @choiceopen/atomemo-plugin-cli version    # check latest version
+
+# Install or upgrade (confirm with user before running — modifies global environment):
+npm install @choiceopen/atomemo-plugin-cli --global
+npm install @choiceopen/atomemo-plugin-cli@latest --global
+
 # Non-interactive project init — provide all flags to skip prompts:
 atomemo plugin init --no-interactive -n <plugin-name> -d "<description>" -l typescript
 
