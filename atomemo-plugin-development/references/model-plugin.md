@@ -6,7 +6,7 @@ they tell Atomemo how to interact with an existing LLM API.
 
 ## File Location
 
-```
+```plain
 src/models/<model-name>.ts
 ```
 
@@ -43,7 +43,7 @@ export const openaiGpt4o = {
 ## Required Fields
 
 | Field | Type | Description |
-|-------|------|-------------|
+| ----- | ---- | ----------- |
 | `name` | string | Unique system identifier — `provider/model_name` format |
 | `display_name` | I18nText | User-facing name |
 | `description` | I18nText | Short description |
@@ -55,7 +55,9 @@ export const openaiGpt4o = {
 ## Optional Fields
 
 ### `override_parameters`
+
 Customize default values and allowed ranges for standard LLM parameters:
+
 ```typescript
 override_parameters: {
   temperature: { default: 0.7, minimum: 0.0, maximum: 1.0 },
@@ -64,7 +66,9 @@ override_parameters: {
 ```
 
 ### `pricing`
+
 Omit for free/self-hosted models. Per 1K tokens:
+
 ```typescript
 pricing: {
   currency: "USD",
@@ -74,7 +78,9 @@ pricing: {
 ```
 
 ### `unsupported_parameters`
+
 List parameters that don't apply to this model — they'll be hidden in the UI:
+
 ```typescript
 unsupported_parameters: ["seed", "verbosity", "top_k"]
 ```
@@ -82,6 +88,7 @@ unsupported_parameters: ["seed", "verbosity", "top_k"]
 ## Model Name Format
 
 The `name` field is the system identifier and must be globally unique:
+
 - Format: `provider/model_name`
 - Length: 4–64 characters
 - Allowed: alphanumeric, underscore, hyphen, forward slash
@@ -90,7 +97,7 @@ The `name` field is the system identifier and must be globally unique:
 ## Input Modalities
 
 | Value | Meaning |
-|-------|---------|
+| ----- | ------- |
 | `"text"` | Text input (always include) |
 | `"image"` | Vision capability (images in context) |
 | `"file"` | File/document input |

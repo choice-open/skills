@@ -4,10 +4,12 @@ Parameters are declared as configuration objects — the platform renders the UI
 automatically. No need to write form components.
 
 Each parameter has two parts:
+
 - **Property**: data model (type, constraints, default value)
 - **PropertyUI** (`ui` field): how it renders in the form
 
 ## Table of Contents
+
 - [Common Fields (PropertyBase)](#common-fields)
 - [String](#string)
 - [Number / Integer](#number--integer)
@@ -62,7 +64,7 @@ All parameter types share these fields (PropertyBase):
 **UI components:**
 
 | Component | Description |
-|-----------|-------------|
+| --------- | ----------- |
 | `"input"` | Single-line text input (default) |
 | `"textarea"` | Multi-line text |
 | `"select"` | Dropdown (requires `enum`); options: `{ searchable?: boolean }` |
@@ -122,7 +124,7 @@ Groups related fields together. Child fields are defined in `properties`.
 **UI components:**
 
 | Component | Description |
-|-----------|-------------|
+| --------- | ----------- |
 | flat (default) | Children rendered inline |
 | `"collapsible-panel"` | Expandable/collapsible container |
 | `"section"` | Named section with indented children |
@@ -160,7 +162,7 @@ List of items. Item schema is defined in `items`.
 **UI components:**
 
 | Component | Description |
-|-----------|-------------|
+| --------- | ----------- |
 | `"array-section"` | Auto-detects mode: **Simple** (primitive `items` → tag-like list) or **Compound** (`object` items → structured rows with add/remove) |
 | `"multi-select"` | Multi-select from enum options |
 | `"tag-input"` | Free-form text tags |
@@ -185,6 +187,7 @@ is available in `args.credentials` inside `invoke()`.
 ```
 
 Access in invoke:
+
 ```typescript
 const cred = args.credentials["openai_credential"]
 const apiKey = cred.api_key
@@ -328,6 +331,7 @@ placeholder: t("MY_LABEL_PLACEHOLDER"),
 ```
 
 Only use inline `I18nText` objects as a last resort (e.g., test fixtures):
+
 ```typescript
 // Fallback only — avoid in production plugin code
 display_name: { en_US: "My Label", zh_Hans: "我的标签" }

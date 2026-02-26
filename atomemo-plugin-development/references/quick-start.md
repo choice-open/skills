@@ -4,7 +4,7 @@
 
 - Node.js v20+
 - Git v2+
-- A registered Atomemo account (at https://atomemo.ai)
+- A registered Atomemo account (at <https://atomemo.ai>)
 - Familiarity with TypeScript/JavaScript
 
 ## Installation
@@ -29,11 +29,13 @@ and enter the code to complete login.
 ### Step 2: Initialize project
 
 **Interactive mode** (prompts for each field):
+
 ```bash
 atomemo plugin init
 ```
 
 **Non-interactive mode** (all flags provided — can be run automatically):
+
 ```bash
 atomemo plugin init --no-interactive \
   -n <plugin-name> \
@@ -72,7 +74,7 @@ Invalid: `My-Plugin` (uppercase), `my--plugin` (consecutive hyphens), `plugin-` 
 
 ## Generated Project Structure
 
-```
+```plain
 <plugin-name>/
 ├── src/
 │   ├── index.ts          ← main entry point
@@ -95,18 +97,21 @@ bun run ./dist    # connect to Plugin Hub
 `bun run dev` is watch/rebuild mode only — it does **not** connect to the Hub.
 
 To iterate quickly:
+
 ```bash
 bun run build && bun run ./dist
 ```
 
 A successful connection to the Plugin Hub shows:
-```
+
+```plain
 status: ok, response: { success: true }
 ```
 
 ## Dev Key Expiry
 
 The debug API key in `.env` expires after **24 hours**. If you see auth errors, refresh it:
+
 ```bash
 atomemo plugin refresh-key
 ```
@@ -114,6 +119,7 @@ atomemo plugin refresh-key
 ## Next Steps
 
 After the project is set up:
+
 - Add a Tool → see `tool-plugin.md`
 - Add a Model → see `model-plugin.md`
 - Add Credentials → see `credential.md`

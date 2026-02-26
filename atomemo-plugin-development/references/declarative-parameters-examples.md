@@ -3,6 +3,7 @@
 Ready-to-copy patterns for common parameter configurations.
 
 ## Table of Contents
+
 - [Basic String Input](#basic-string-input)
 - [Enum Select](#enum-select)
 - [Nested Object with Collapsible Panel](#nested-object-with-collapsible-panel)
@@ -88,7 +89,7 @@ Group related optional settings under a collapsible panel so they don't clutter 
     {
       name: "user_agent",
       type: "string",
-      display_name: { en_US: "Custom User-Agent" },
+      display_name: { en_US: "Custom -Agent" },
       ui: { component: "input" }
     }
   ]
@@ -266,7 +267,7 @@ async invoke(args) {
   const cred = args.credentials["firecrawl_credential"]
   const apiKey = cred.api_key
 
-  const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
+  const response = await fetch("https://<FIRECRAWL_ENDPOINT>/v1/scrape", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${apiKey}`,
@@ -439,7 +440,7 @@ export const firecrawlScrapeTool = {
       }
     }
 
-    const res = await fetch("https://api.firecrawl.dev/v1/scrape", {
+    const res = await fetch("https://<FIRECRAWL_ENDPOINT/v1/scrape", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${cred.api_key}`,

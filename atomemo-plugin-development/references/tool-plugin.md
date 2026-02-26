@@ -5,7 +5,7 @@ Examples: web search, image generation, data transformation, sending emails.
 
 ## File Location
 
-```
+```plain
 src/tools/<tool-name>.ts
 ```
 
@@ -53,7 +53,7 @@ export const weatherTool = {
 ## Required Fields
 
 | Field | Type | Description |
-|-------|------|-------------|
+| ----- | ---- | ----------- |
 | `name` | string | Unique identifier within the plugin |
 | `display_name` | I18nText | User-facing name |
 | `description` | I18nText | Short description of what the tool does |
@@ -96,6 +96,7 @@ parameters: [
 ```
 
 Then access in `invoke`:
+
 ```typescript
 async invoke({ args }) {
   const cred = args.credentials["api_credential"]
@@ -120,6 +121,7 @@ plugin.run()
 ## Multiple Tools
 
 Register each tool separately:
+
 ```typescript
 plugin.addTool(searchTool)
 plugin.addTool(weatherTool)

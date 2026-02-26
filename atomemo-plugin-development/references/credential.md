@@ -10,7 +10,7 @@ They serve two distinct roles depending on where they're used:
 
 ## File Location
 
-```
+```plain
 src/credentials/<credential-name>.ts
 ```
 
@@ -63,7 +63,7 @@ export const openaiCredential = {
 ## Required Fields
 
 | Field | Type | Description |
-|-------|------|-------------|
+| ----- | ---- | ----------- |
 | `name` | string | Unique identifier; referenced by `credential_name` in tool parameters |
 | `display_name` | I18nText | User-facing name |
 | `description` | I18nText | Explains what service this credential connects to |
@@ -91,7 +91,7 @@ async authenticate({ parameters }) {
 ## Supported Adapters
 
 | Adapter | Use for |
-|---------|---------|
+| ------- | ------- |
 | `"openai"` | OpenAI API and compatible endpoints |
 | `"anthropic"` | Anthropic Claude API |
 | `"google"` | Google Gemini API |
@@ -113,6 +113,7 @@ When a tool needs a credential, declare a `credential_id` parameter:
 ```
 
 Access in `invoke`:
+
 ```typescript
 async invoke({ args }) {
   const cred = args.credentials["api_credential"]

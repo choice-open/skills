@@ -17,6 +17,7 @@ bun run release
 ```
 
 This single command:
+
 - Validates all manifests
 - Builds and bundles the plugin
 - Syncs version numbers automatically
@@ -27,7 +28,7 @@ Do not manually edit build artifacts.
 
 ### Step 1: Fork the official plugins repository
 
-Go to: https://github.com/choice-open/atomemo-official-plugins
+Go to: <https://github.com/choice-open/atomemo-official-plugins>
 
 Fork it to your account.
 
@@ -35,7 +36,7 @@ Fork it to your account.
 
 Clone your fork, then add your plugin directory:
 
-```
+```plain
 atomemo-official-plugins/
 └── plugins/
     └── your-plugin-name/       ← add this directory
