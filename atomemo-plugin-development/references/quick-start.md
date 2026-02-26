@@ -16,15 +16,24 @@ atomemo --version   # verify installation
 
 ## Create a New Plugin Project
 
-### Step 1: Authenticate (requires user action)
+### Step 1: Authenticate (user must run this — never run it yourself)
 
-```bash
-atomemo auth login
-```
+**Do not run `atomemo auth login` on the user's behalf.** It blocks waiting for
+browser interaction and will fail or hang in any automated context.
 
-This uses a **device authorization flow** — it cannot be automated. The command
-prints a verification URL and a code. The user must open the URL in their browser
-and enter the code to complete login.
+Instead:
+
+1. Ask the user to run:
+   ```bash
+   atomemo auth login
+   ```
+2. Tell them: the command prints a verification URL and a short code — they must
+   open the URL in their browser and enter the code to approve the device.
+3. Wait for the user to confirm they've completed the browser step.
+4. Then verify the session yourself:
+   ```bash
+   atomemo auth status
+   ```
 
 ### Step 2: Initialize project
 

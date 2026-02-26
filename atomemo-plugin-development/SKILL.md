@@ -233,11 +233,28 @@ bun run build
 bun run ./dist    # connects to Plugin Hub; bun run dev only rebuilds, does not connect
 ```
 
-**What requires user action:**
+**What you must NEVER run — `atomemo auth login`:**
 
-`atomemo auth login` uses a device authorization flow. You cannot automate it.
-Instead, guide the user: tell them to run it, show them the verification URL/code
-that appears, and wait for them to confirm before continuing.
+This command uses a device authorization flow that requires a human to interact
+with a browser. Running it in an automated context will block indefinitely or
+terminate before the user can complete authorization.
+
+Instead, follow this protocol:
+
+1. Tell the user they need to authenticate and ask them to run the command themselves:
+   ```bash
+   atomemo auth login
+   ```
+2. Explain what will happen: the command prints a verification URL and a short
+   code; they must open the URL in their browser and enter the code to approve
+   the device.
+3. Wait for the user to confirm they have completed the login.
+4. Once they confirm, verify the result yourself:
+   ```bash
+   atomemo auth status
+   ```
+   A successful response confirms the login is active. If it fails, walk the user
+   through the login step again.
 
 Always confirm with the user before running CLI commands that create files or
 modify their environment.
