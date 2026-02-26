@@ -122,19 +122,23 @@ bun run build
 bun run ./dist             # connects to Plugin Hub
 ```
 
-Once the project is set up, **always pause and ask the developer before proceeding**.
+### Step 4: Check in with the developer (always required)
 
-Match the language and tone of your question to whatever language the developer used when they first invoked this skill. The message should:
+Project scaffolding is complete. Before writing any code, you must ask the developer what they want to do next.
 
-1. Let them know the project directory has been created
-2. Recommend they `cd` into it and **restart the Agent from that directory** — this gives the Agent accurate working directory context for all subsequent work (planning, implementation, builds)
-3. Suggest they then choose between:
-   - Switching to Plan mode first to map out the approach before writing code
-   - Starting implementation directly if the feature is already clear
+**Do NOT continue to Step 5 until the developer has replied.**
 
-Keep the question concise. Wait for their answer before moving on. Even if the developer described the feature earlier, a planning step can prevent costly rework on complex plugins.
+Your message should (in whatever language the developer used when invoking this skill):
 
-### Step 4: Implement plugin components
+1. Confirm the project directory has been created
+2. Recommend they `cd` into it and restart the Agent from that directory — this gives the Agent accurate working directory context for all subsequent work (planning, implementation, builds)
+3. Ask them to choose:
+   - **Plan mode first** (recommended for complex features) — map out the approach before writing code
+   - **Implement directly** — if the feature is already well-defined and straightforward
+
+This step is complete only when the developer has made their choice.
+
+### Step 5: Implement plugin components
 
 For each component:
 
@@ -168,7 +172,7 @@ plugin.addCredential(myCredential)
 plugin.run()
 ```
 
-### Step 5: Internationalization
+### Step 6: Internationalization
 
 All user-facing strings support i18n. **Always use the `t()` helper** — it keeps
 translations centralized and consistent across the project:
@@ -189,7 +193,7 @@ To generate the i18n types, **ALWAYS** use the following command after adding ne
 bun typesafe-i18n --no-watch
 ```
 
-### Step 6: Test locally
+### Step 7: Test locally
 
 ```bash
 bun run build        # build the plugin
@@ -200,11 +204,11 @@ bun run ./dist       # connect to Plugin Hub
 
 Successful connection shows: `status: ok, response: { success: true }`
 
-### Step 7: Publish (when ready)
+### Step 8: Publish (when ready)
 
 See `references/publishing.md`. Key steps:
 
-1. `bun run release` — validates, builds, syncs versions
+1. Ask the user to run `bun run release` — this is interactive (prompts for version selection) and must be run by the user, not the agent
 2. Fork `atomemo-official-plugins` repo
 3. Add plugin to `plugins/<your-plugin-name>/`
 4. Open PR with title `feat(plugin): add <your-plugin-name>`

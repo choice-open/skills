@@ -12,12 +12,17 @@ Before submitting, verify:
 
 ## Build for Release
 
+**Do not run this command on the user's behalf.** It is interactive — it prompts the user to select the next version number and requires their input to proceed.
+
+Ask the user to run it themselves:
+
 ```bash
 bun run release
 ```
 
 This single command:
 
+- Prompts for the next version number (interactive)
 - Validates all manifests
 - Builds and bundles the plugin
 - Syncs version numbers automatically
@@ -65,7 +70,7 @@ becomes discoverable in the Atomemo marketplace.
 
 1. Increment `version` in `package.json`
 2. Make your changes
-3. Run `bun run release`
+3. Ask the user to run `bun run release` (interactive — prompts for version selection)
 4. Submit a new PR with the updated plugin directory
 
 The marketplace detects new versions automatically after merge.

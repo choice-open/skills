@@ -24,13 +24,16 @@ browser interaction and will fail or hang in any automated context.
 Instead:
 
 1. Ask the user to run:
+
    ```bash
    atomemo auth login
    ```
+
 2. Tell them: the command prints a verification URL and a short code — they must
    open the URL in their browser and enter the code to approve the device.
 3. Wait for the user to confirm they've completed the browser step.
 4. Then verify the session yourself:
+
    ```bash
    atomemo auth status
    ```
