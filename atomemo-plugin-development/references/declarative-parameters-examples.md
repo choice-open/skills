@@ -89,7 +89,7 @@ Group related optional settings under a collapsible panel so they don't clutter 
     {
       name: "user_agent",
       type: "string",
-      display_name: { en_US: "Custom -Agent" },
+      display_name: { en_US: "Custom User-Agent" },
       ui: { component: "input" }
     }
   ]
@@ -263,7 +263,7 @@ Let the user select a pre-configured credential. The credential data is availabl
 **Access in invoke:**
 
 ```typescript
-async invoke(args) {
+async invoke({ args }) {
   const cred = args.credentials["firecrawl_credential"]
   const apiKey = cred.api_key
 
@@ -412,7 +412,7 @@ export const firecrawlScrapeTool = {
     }
   ],
 
-  async invoke(args) {
+  async invoke({ args }) {
     const cred = args.credentials["credential"]
     const { url, formats, actions, page_options } = args.parameters
 
@@ -440,7 +440,7 @@ export const firecrawlScrapeTool = {
       }
     }
 
-    const res = await fetch("https://<FIRECRAWL_ENDPOINT/v1/scrape", {
+    const res = await fetch("https://<FIRECRAWL_ENDPOINT>/v1/scrape", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${cred.api_key}`,

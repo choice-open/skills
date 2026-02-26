@@ -90,7 +90,7 @@ unsupported_parameters: ["seed", "verbosity", "top_k"]
 The `name` field is the system identifier and must be globally unique:
 
 - Format: `provider/model_name`
-- Length: 4–64 characters
+- Length: 4–64 characters (the `/` counts toward the total; shortest valid example: `a/bc`)
 - Allowed: alphanumeric, underscore, hyphen, forward slash
 - Examples: `openai/gpt-4o`, `anthropic/claude-3-5-sonnet`, `my-company/custom-model`
 

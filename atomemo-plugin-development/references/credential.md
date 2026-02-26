@@ -69,7 +69,7 @@ export const openaiCredential = {
 | `description` | I18nText | Explains what service this credential connects to |
 | `icon` | string | Emoji or image URL |
 | `parameters` | Property[] | Fields the user fills in (API keys, URLs, etc.) |
-| `authenticate` | async function | Returns adapter config (for model credentials) |
+| `authenticate` | async function | **Model credentials only** — returns adapter config; omit for Tool-only credentials |
 
 ## The `authenticate()` Function
 

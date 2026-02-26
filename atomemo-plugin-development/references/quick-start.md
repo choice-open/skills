@@ -93,7 +93,7 @@ Invalid: `My-Plugin` (uppercase), `my--plugin` (consecutive hyphens), `plugin-` 
 │   └── i18n/             ← translation files (SDK-managed)
 ├── package.json
 ├── tsconfig.json
-└── .env                  ← auto-generated, contains debug API key
+└── .env                  ← auto-generated, contains debug API key (already in .gitignore — never commit)
 ```
 
 ## Running Locally

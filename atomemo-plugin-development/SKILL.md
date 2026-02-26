@@ -6,13 +6,13 @@ description: >
   that may differ from your general knowledge. Invoke whenever the user asks about:
   creating Atomemo plugin projects (atomemo plugin init, bun commands, project
   structure), implementing Tool plugins (ToolDefinition, external API wrappers),
-  defining Model plugins (ModelDefinition, LLM integrations), setting up credentials
-  (CredentialDefinition, API keys), configuring declarative parameters, debugging
-  plugin hub connections, or publishing to the marketplace. Also invoke when developers
-  want to expose their code or services to Atomemo users, even if they don't say
-  "plugin". Do NOT invoke for: VS Code, Chrome, Obsidian, Figma, or Raycast plugins;
-  npm package publishing; or general Atomemo workflow configuration (scheduling,
-  triggers, node setup) that isn't about building plugins.
+  defining Model plugins (ModelDefinition, LLM integrations), defining Credential
+  plugins (CredentialDefinition, API keys, OAuth tokens), configuring declarative
+  parameters, debugging plugin hub connections, or publishing to the marketplace.
+  Also invoke when developers want to expose their code or services to Atomemo users,
+  even if they don't say "plugin". Do NOT invoke for: VS Code, Chrome, Obsidian,
+  Figma, or Raycast plugins; npm package publishing; or general Atomemo workflow
+  configuration (scheduling, triggers, node setup) that isn't about building plugins.
 ---
 
 # Atomemo Plugin Development
@@ -35,14 +35,15 @@ Host (Atomemo App)
 - **SDK** (`@choiceopen/atomemo-plugin-sdk-js`): Handles communication, types, i18n, lifecycle
 - **CLI** (`@choiceopen/atomemo-plugin-cli`): Project scaffolding, dev server, build, publish
 
-## Two Plugin Types
+## Three Plugin Types
 
 | Type | What it does | Source directory |
 | ---- | ----------- | --------------- |
 | **Tool** | Invokes external APIs or runs local logic | `src/tools/` |
 | **Model** | Describes an LLM (capabilities, pricing, params) | `src/models/` |
+| **Credential** | Defines auth requirements (API keys, OAuth tokens) | `src/credentials/` |
 
-A single plugin can contain multiple Tools AND multiple Models.
+A single plugin can contain multiple Tools, Models, and Credentials.
 
 ## Identify the Scenario
 
@@ -112,8 +113,8 @@ Both of these checks are safe to run automatically. Confirm the upgrade with the
 See `references/quick-start.md`. Key commands:
 
 ```bash
-atomemo auth login
-atomemo plugin init        # interactive: name, description, language
+# atomemo auth login   ← user must run this manually (device auth flow, requires browser)
+atomemo plugin init --no-interactive -n <plugin-name> -d "<description>" -l typescript
 cd <plugin-name>
 atomemo plugin refresh-key
 bun install
@@ -242,17 +243,21 @@ terminate before the user can complete authorization.
 Instead, follow this protocol:
 
 1. Tell the user they need to authenticate and ask them to run the command themselves:
+
    ```bash
    atomemo auth login
    ```
+
 2. Explain what will happen: the command prints a verification URL and a short
    code; they must open the URL in their browser and enter the code to approve
    the device.
 3. Wait for the user to confirm they have completed the login.
 4. Once they confirm, verify the result yourself:
+
    ```bash
    atomemo auth status
    ```
+
    A successful response confirms the login is active. If it fails, walk the user
    through the login step again.
 
