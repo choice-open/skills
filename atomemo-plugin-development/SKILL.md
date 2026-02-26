@@ -122,6 +122,17 @@ bun run build
 bun run ./dist             # connects to Plugin Hub
 ```
 
+Once the project is set up, **always pause and ask the developer before proceeding**.
+
+Match the language and tone of your question to whatever language the developer used when they first invoked this skill. The message should:
+1. Let them know the project directory has been created
+2. Recommend they `cd` into it and **restart the Agent from that directory** — this gives the Agent accurate working directory context for all subsequent work (planning, implementation, builds)
+3. Suggest they then choose between:
+   - Switching to Plan mode first to map out the approach before writing code
+   - Starting implementation directly if the feature is already clear
+
+Keep the question concise. Wait for their answer before moving on. Even if the developer described the feature earlier, a planning step can prevent costly rework on complex plugins.
+
 ### Step 4: Implement plugin components
 
 For each component:
