@@ -45,6 +45,35 @@ Host (Atomemo App)
 
 A single plugin can contain multiple Tools, Models, and Credentials.
 
+## Workflow Overview
+
+This diagram combines scenario identification with the full workflow. Use it as a map
+before diving into the step-by-step sections below.
+
+```mermaid
+flowchart TD
+    Start([Start]) --> B{Which scenario?}
+
+    B -->|"A: New project"| C[Step 2: Verify CLI\ninstalled & up to date]
+    B -->|"B: Add to existing project"| G[Load relevant reference guide\nsee Reference Files section]
+    B -->|"C: Publish"| K[references/publishing.md]
+
+    C --> D{Authenticated?}
+    D -->|"Yes"| E["Step 3: atomemo plugin init\nbun install → build → run"]
+    D -->|"No"| F["⛔ BLOCK\nAsk user to run atomemo auth login\ndevice auth — browser required\nnever run this automatically"]
+    F -->|"User confirms done"| D
+
+    E --> H["🛑 BLOCK — Step 4\nCheck in with developer\nDO NOT continue until they reply\nAsk: plan mode or implement directly?"]
+    G --> I
+    H -->|"Developer responds"| I["Step 5–6: Implement + i18n\nTools · Models · Credentials\nuse t() for all user-facing strings"]
+
+    I --> L["Step 7: bun run build\nbun run ./dist"]
+    L --> M{Ready to ship?}
+    M -->|"Yes"| K
+    M -->|"More work"| I
+    K --> End([Done])
+```
+
 ## Identify the Scenario
 
 **Scenario A — New project from scratch:**
