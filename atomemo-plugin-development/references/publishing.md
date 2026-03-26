@@ -4,28 +4,23 @@
 
 Before submitting, verify:
 
-1. **Metadata** — `package.json` has accurate `name`, `version`, `description`, `author`
-2. **Code quality** — No debug logs, no linting errors
-3. **Security** — No hardcoded API keys or secrets (use Credentials instead)
-4. **README** — Clear explanation of what the plugin does and how to configure it
-5. **Version** — Increment `version` in `package.json` for updates to existing plugins
+1. **Metadata** — `package.json` has accurate `name`, `version`, `description`, and `author`
+2. **Plugin definition consistency** — metadata used by `createPlugin()` matches package metadata
+3. **Code quality** — no lint errors and no leftover debug code
+4. **Security** — no hardcoded API keys or secrets; use Credentials instead
+5. **README** — clear explanation of what the plugin does and how to configure it
+6. **Release script** — use the release script before submitting
 
 ## Build for Release
-
-**Do not run this command on the user's behalf.** It is interactive — it prompts the user to select the next version number and requires their input to proceed.
-
-Ask the user to run it themselves:
 
 ```bash
 bun run release
 ```
 
 This single command:
-
-- Prompts for the next version number (interactive)
-- Validates all manifests
-- Builds and bundles the plugin
-- Syncs version numbers automatically
+- validates artifacts and metadata
+- builds and bundles the plugin
+- syncs version numbers automatically
 
 Do not manually edit build artifacts.
 
@@ -33,7 +28,7 @@ Do not manually edit build artifacts.
 
 ### Step 1: Fork the official plugins repository
 
-Go to: <https://github.com/choice-open/atomemo-official-plugins>
+Go to: https://github.com/choice-open/atomemo-official-plugins
 
 Fork it to your account.
 
@@ -41,7 +36,7 @@ Fork it to your account.
 
 Clone your fork, then add your plugin directory:
 
-```plain
+```
 atomemo-official-plugins/
 └── plugins/
     └── your-plugin-name/       ← add this directory
@@ -68,9 +63,9 @@ becomes discoverable in the Atomemo marketplace.
 
 ## Updating a Published Plugin
 
-1. Increment `version` in `package.json`
-2. Make your changes
-3. Ask the user to run `bun run release` (interactive — prompts for version selection)
+1. Update the version in `package.json`
+2. Update the plugin implementation
+3. Run `bun run release`
 4. Submit a new PR with the updated plugin directory
 
 The marketplace detects new versions automatically after merge.

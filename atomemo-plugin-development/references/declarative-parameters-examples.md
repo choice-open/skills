@@ -1,9 +1,9 @@
 # Declarative Parameters — Practical Examples
 
-Ready-to-copy patterns for common parameter configurations.
+Ready-to-copy patterns for current Atomemo parameter capabilities, including
+newer schema features like `file_ref`, `resource_locator`, and `resource_mapper`.
 
 ## Table of Contents
-
 - [Basic String Input](#basic-string-input)
 - [Enum Select](#enum-select)
 - [Nested Object with Collapsible Panel](#nested-object-with-collapsible-panel)
@@ -11,6 +11,9 @@ Ready-to-copy patterns for common parameter configurations.
 - [Discriminated Union (Multi-Variant)](#discriminated-union-multi-variant)
 - [Conditional Display (Linked Parameters)](#conditional-display-linked-parameters)
 - [Credential Usage](#credential-usage)
+- [File Reference](#file-reference)
+- [Resource Locator](#resource-locator)
+- [Resource Mapper](#resource-mapper)
 - [Complete Tool Example — Firecrawl Scrape](#complete-tool-example--firecrawl-scrape)
 
 ---
@@ -263,11 +266,11 @@ Let the user select a pre-configured credential. The credential data is availabl
 **Access in invoke:**
 
 ```typescript
-async invoke({ args }) {
+async invoke(args) {
   const cred = args.credentials["firecrawl_credential"]
   const apiKey = cred.api_key
 
-  const response = await fetch("https://<FIRECRAWL_ENDPOINT>/v1/scrape", {
+  const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${apiKey}`,
@@ -276,6 +279,110 @@ async invoke({ args }) {
     body: JSON.stringify({ url: args.parameters.url })
   })
   // ...
+}
+```
+
+---
+
+## File Reference
+
+Use `file_ref` when the tool consumes a file from upstream or returns a generated file:
+
+```typescript
+{
+  name: "file",
+  type: "file_ref",
+  required: true,
+  display_name: { en_US: "File" }
+}
+```
+
+Read it in `invoke()` with `context.files`:
+
+```typescript
+async invoke({ args, context }) {
+  const fileRef = context.files.parseFileRef(args.parameters.file)
+  const downloaded = await context.files.download(fileRef)
+
+  return {
+    filename: downloaded.filename,
+    size: downloaded.size,
+  }
+}
+```
+
+---
+
+## Resource Locator
+
+Use `resource_locator` when the user needs to select a remote resource by list, URL, or ID:
+
+```typescript
+{
+  name: "workspace",
+  type: "resource_locator",
+  required: true,
+  display_name: { en_US: "Workspace" },
+  modes: [
+    {
+      type: "list",
+      search_list_method: "search_workspaces",
+      searchable: true,
+    },
+    {
+      type: "url",
+      extract_value: {
+        type: "regex",
+        regex: "https://app.example.com/workspaces/([A-Za-z0-9_-]+)",
+      },
+    },
+    { type: "id" },
+  ],
+}
+```
+
+```typescript
+locator_list: {
+  search_workspaces: async ({ filter }) => {
+    const items = await apiClient.listWorkspaces()
+    return {
+      results: items
+        .filter(item => !filter || item.name.toLowerCase().includes(filter.toLowerCase()))
+        .map(item => ({ label: item.name, value: item.id })),
+    }
+  },
+}
+```
+
+---
+
+## Resource Mapper
+
+Use `resource_mapper` when the user maps a remote schema into a payload:
+
+```typescript
+{
+  name: "fields",
+  type: "resource_mapper",
+  required: true,
+  display_name: { en_US: "Fields" },
+  mapping_method: "map_record_fields",
+}
+```
+
+```typescript
+resource_mapping: {
+  map_record_fields: async ({ args }) => {
+    const schema = await apiClient.getSchema(args.parameters.table)
+    return {
+      fields: schema.columns.map(column => ({
+        id: column.id,
+        display_name: { en_US: column.name },
+        type: column.type,
+        required: column.required,
+      })),
+    }
+  },
 }
 ```
 
@@ -412,7 +519,7 @@ export const firecrawlScrapeTool = {
     }
   ],
 
-  async invoke({ args }) {
+  async invoke(args) {
     const cred = args.credentials["credential"]
     const { url, formats, actions, page_options } = args.parameters
 
@@ -440,7 +547,7 @@ export const firecrawlScrapeTool = {
       }
     }
 
-    const res = await fetch("https://<FIRECRAWL_ENDPOINT>/v1/scrape", {
+    const res = await fetch("https://api.firecrawl.dev/v1/scrape", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${cred.api_key}`,
@@ -458,3 +565,6 @@ export const firecrawlScrapeTool = {
   }
 } satisfies ToolDefinition
 ```
+ 
+For deeper explanations of the underlying types and UI behavior, continue with
+`declarative-parameters.md` and the linked focused reference pages.
