@@ -119,7 +119,17 @@ atomemo plugin init
 cd <plugin-name>
 atomemo plugin refresh-key
 bun install
+```
+
+Then in **two separate terminals**:
+
+```bash
+# Terminal 1 — watch mode (rebuilds on save, does NOT connect to Hub)
 bun run dev
+```
+
+```bash
+# Terminal 2 — connects to Plugin Hub
 bun run ./dist
 ```
 
@@ -157,7 +167,8 @@ plugin.run()
 
 Use declarative parameters for user input and configuration. Start with:
 
-- `references/declarative-parameters.md`
+- `references/declarative-parameters.md` — index only; read this to find the right sub-page, then load the specific sub-file(s) you need
+- `references/declarative-parameters-overview-and-core-concepts.md` — load this alongside the index for foundational knowledge
 - `references/declarative-parameters-examples.md`
 
 When a tool handles files, use `context.files` helpers instead of manually treating
@@ -181,7 +192,7 @@ bun run build
 bun run ./dist
 ```
 
-`bun run dev` rebuilds in watch mode. `bun run ./dist` creates the actual Hub connection.
+`bun run dev` rebuilds in watch mode **but does not connect to Plugin Hub** — run it in a separate terminal from `bun run ./dist`, which creates the actual Hub connection.
 
 ### Step 8: Publish (when ready)
 
@@ -205,7 +216,7 @@ Load these on demand based on what the developer needs:
 | `references/tool-plugin.md` | Building Tool plugins |
 | `references/model-plugin.md` | Building Model plugins |
 | `references/credential.md` | Defining credentials |
-| `references/declarative-parameters.md` | Parameter types and UI config |
+| `references/declarative-parameters.md` | Parameter system index (TOC only) — points to 14 sub-pages; load sub-files for actual content |
 | `references/declarative-parameters-examples.md` | Ready-to-copy parameter examples |
 | `references/publishing.md` | Publishing to the marketplace |
 
