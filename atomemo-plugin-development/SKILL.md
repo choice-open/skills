@@ -60,7 +60,7 @@ Read the relevant guide directly:
 - Adding a Tool → `references/tool-plugin.md`
 - Adding a Model → `references/model-plugin.md`
 - Adding Credentials → `references/credential.md`
-- Configuring Parameters → `references/declarative-parameters.md`
+- Configuring Parameters → `references/declarative-parameters.md`, then load the specific sub-page(s) it points to for the task at hand
 - Understanding `context.files` → `references/tool-plugin.md`
 
 **Scenario C — Publishing:**
@@ -163,6 +163,13 @@ plugin.addCredential(myCredential)
 plugin.run()
 ```
 
+For `createPlugin(...)` metadata, do **not** invent a brand-new manifest shape from memory.
+Open the existing `src/index.ts` first and preserve the scaffolded structure unless the
+developer explicitly wants to change plugin metadata. Keep the metadata used by
+`createPlugin(...)` aligned with `package.json` and README details; see
+`references/core-concepts.md` for entrypoint guidance and `references/publishing.md`
+for the metadata consistency requirement.
+
 ### Step 5: Declarative parameters and file handling
 
 Use declarative parameters for user input and configuration. Start with:
@@ -170,6 +177,16 @@ Use declarative parameters for user input and configuration. Start with:
 - `references/declarative-parameters.md` — index only; read this to find the right sub-page, then load the specific sub-file(s) you need
 - `references/declarative-parameters-overview-and-core-concepts.md` — load this alongside the index for foundational knowledge
 - `references/declarative-parameters-examples.md`
+
+Then load the focused page that matches the question:
+
+- Need allowed `type` values or plugin-type support → `references/declarative-parameters-property-type-overview.md`
+- Need common schema keys such as `required`, `display`, `ui`, `depends_on`, or `decoder` → `references/declarative-parameters-property-base.md`
+- Need the full definition of a scalar, object, array, or special property type → the matching basic/composite/special type page
+- Need UI component names or default rendering behavior → `references/declarative-parameters-property-ui-reference.md` and `references/declarative-parameters-default-ui-behavior.md`
+- Need dynamic visibility rules → `references/declarative-parameters-display-condition.md`
+- Need Tool-only remote selection or mapping flows → `references/declarative-parameters-resource-locator.md` and `references/declarative-parameters-resource-mapper.md`
+- Need examples to adapt quickly → `references/declarative-parameters-examples.md`
 
 When a tool handles files, use `context.files` helpers instead of manually treating
 file references as plain JSON.
@@ -212,11 +229,11 @@ Load these on demand based on what the developer needs:
 | File | When to read |
 | ---- | ----------- |
 | `references/quick-start.md` | New project setup |
-| `references/core-concepts.md` | Architecture, manifest, lifecycle |
+| `references/core-concepts.md` | Architecture, plugin entrypoint, metadata consistency, lifecycle |
 | `references/tool-plugin.md` | Building Tool plugins |
 | `references/model-plugin.md` | Building Model plugins |
 | `references/credential.md` | Defining credentials |
-| `references/declarative-parameters.md` | Parameter system index (TOC only) — points to 14 sub-pages; load sub-files for actual content |
+| `references/declarative-parameters.md` | Parameter routing guide + TOC; use it to choose the correct focused reference page |
 | `references/declarative-parameters-examples.md` | Ready-to-copy parameter examples |
 | `references/publishing.md` | Publishing to the marketplace |
 
